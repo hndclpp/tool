@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="如标题，正是用来计算汇率的，每天早上8点更新汇率数据">
+    <title>汇率计算</title>
+    <link rel="stylesheet" type="text/css" href="../common/common.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+<!-- 面包屑导航 -->
+<nav class="breadcrumb">
+    <a href="../index.html">index</a> &gt; 汇率计算
+</nav>
+    <h1>汇率计算</h1>
+    <img alt="Update time" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fapi.exchangerate-api.com%2Fv4%2Flatest%2FCNY&query=%24.date&style=plastic&label=Update%20Time">
+
+    <input type="number" id="amount" placeholder="金额" />
+    <select id="fromCurrency"></select>
+    <select id="toCurrency"></select>
+    <button id="convertButton">计算汇率</button>
+    <h2 id="result"></h2>
+
+<script src="./js/fn.js"></script>
+</body>
+</html>

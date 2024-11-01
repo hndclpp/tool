@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>简单的工具</title>
+    <style>
+        .container {
+            width: 60%;
+            margin: 10% auto 0;
+            background-color: #f0f0f0;
+            padding: 2% 5%;
+            border-radius: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            line-height: 2.3;
+        }
+
+        a {
+            color: #20a53a;
+            text-decoration: none;
+        }
+
+        .icons-container {
+            text-align: center;
+            margin-top: 10px; /* 与标题的间距 */
+        }
+
+        .icons img {
+            height: 24px; /* 控制图标大小 */
+            margin-right: 10px; /* 图标间的间距 */
+        }
+
+        .logo {
+            text-align: center; 
+            margin-bottom: 20px; /* 与下方内容的间距 */
+        }
+
+        .logo img {
+            max-width: 10%; /* 让图片自适应宽度 */
+            height: auto; /* 保持比例 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+	<a href="./index.html"><img src="logo.png" alt="Logo"></a>
+    </div>
+        <div class="icons-container">
+            <span class="icons">
+                <img src="https://api.netlify.com/api/v1/badges/3b4e70e6-ed03-401a-95a3-f3b679a3ec29/deploy-status" alt="Deployment Status">
+		<img src="https://img.shields.io/uptimerobot/ratio/m797911156-330022061c735159ca2dd953?logo=godotengine&logoColor=%23478CBF&logoSize=auto
+" alt="Website Status">
+		<img src="https://img.shields.io/badge/License-GPL_V3-blue?logo=bookstack&logoColor=%230288D1&logoSize=auto
+" alt="License">
+            </span>
+        </div>
+        <ul>
+            <li><a href="/convert">图片格式转换</a></li>
+            <li><a href="/cbm">CBM计算</a></li>
+             <li><a href="/exchangerate">汇率计算</a></li>
+        </ul>
+    </div>
+</body>
+</html>

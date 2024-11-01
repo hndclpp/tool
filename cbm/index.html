@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="正如标题，这是个计算cbm的工具">
+    <title>CBM计算器</title>
+    <link rel="stylesheet" type="text/css" href="../common/common.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            min-height: 400px;
+            text-align: center;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        label {
+            width: 35%;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            min-height: 30px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<!-- 面包屑导航 -->
+<nav class="breadcrumb">
+    <a href="../index.html">index</a> &gt; CBM
+</nav>
+<div class="calculator">
+    <h2>CBM计算器</h2>
+
+    <div class="input-group">
+        <label for="length">长度（CM）:</label>
+        <input type="number" id="length" placeholder="输入长度">
+    </div>
+
+    <div class="input-group">
+        <label for="width">宽度（CM）:</label>
+        <input type="number" id="width" placeholder="输入宽度">
+    </div>
+
+    <div class="input-group">
+        <label for="height">高度（CM）:</label>
+        <input type="number" id="height" placeholder="输入高度">
+    </div>
+
+    <button onclick="calculateCBM()">计算CBM</button>
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+    function calculateCBM() {
+        var length = parseFloat(document.getElementById('length').value);
+        var width = parseFloat(document.getElementById('width').value);
+        var height = parseFloat(document.getElementById('height').value);
+        
+        if (isNaN(length) || isNaN(width) || isNaN(height)) {
+            document.getElementById('result').innerHTML = "请输入所有维度的有效数字";
+        } else {
+            var cbm = (length * width * height) / 1000000; // 将厘米转换为立方米
+            document.getElementById('result').innerHTML = "CBM: " + cbm.toFixed(3) + " 立方米";
+        }
+    }
+</script>
+
+</body>
+</html>

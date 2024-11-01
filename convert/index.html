@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="这是一个图片格式转换工具，支持批量转换为 JPEG、PNG、WEBP、AVIF、ICO、SVG 和 PDF 格式。">
+    <title>图片格式转换</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="../common/common.css">
+    <script src="https://cdn.jsdelivr.net/npm/@squoosh/lib@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- 面包屑导航 -->
+<nav class="breadcrumb">
+    <a href="../index.html">index</a> &gt; 图片格式转换
+</nav>
+
+<div class="container">
+    <h2>图片格式转换</h2>
+
+    <img src="https://img.shields.io/badge/convert_to-jpg%E3%80%81png%E3%80%81webp%E3%80%81avif%E3%80%81ico%E3%80%81svg%E3%80%81pdf-blue?style=flat" alt="Desc">
+    <img src="https://img.shields.io/badge/Support-Batch%20Processing-pink" alt="Batch Processing">
+    <img src="https://img.shields.io/badge/Safe-Offline%20Processing-%2328c66" alt="safe">
+    
+    <div class="upload-group">
+        <label for="image">选择图片文件:</label>
+        <input type="file" id="image" accept="image/*" multiple  placeholder="粘贴图片链接...">
+    </div>
+    
+    <div class="link-group">
+        <label for="imageLink">或输入图片链接:</label>
+        <input type="text" id="imageLink" placeholder="粘贴图片链接...">
+        <button onclick="addImageFromLink()">添加图片</button>
+    </div>
+
+    <div class="format-group">
+        <label for="format">选择目标格式:</label>
+        <select id="format">
+            <option value="jpg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WEBP</option>
+            <option value="avif">AVIF</option>
+            <option value="ico">ICO</option>
+            <option value="svg">SVG</option>
+            <option value="pdf">PDF</option>
+        </select>
+    </div>
+
+    <button onclick="convertImage()">转换图片</button>
+    <button onclick="downloadZip()" style="margin-top: 10px; display:none;" id="zipButton">下载所有转换后的图片</button>
+
+    <div class="result" id="resultContainer"></div>
+</div>
+
+<script src="./js/fn.js"></script>
+</body>
+</html>
