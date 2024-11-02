@@ -15,15 +15,40 @@ document.getElementById('checkIpButton').onclick = function() {
         .then(data => {
             // 构建显示结果的 HTML
             const resultHtml = `
-                <div>IP: ${data.ip}</div>
-                <div>主机名: ${data.hostname}</div>
-                <div>位置: ${data.city}, ${data.region}, ${data.country}</div>
-                <div>经纬度: ${data.loc}</div>
-                <div>时区: ${data.timezone}</div>
-                <div>ISP: ${data.company.name} (${data.asn.name})</div>
-                <div>ASN: ${data.asn.asn} (${data.asn.route})</div>
-                <div>隐私保护: VPN - ${data.privacy.vpn ? '是' : '否'}, 代理 - ${data.privacy.proxy ? '是' : '否'}</div>
-                <div>滥用联系: ${data.abuse.name} (${data.abuse.email})</div>
+                <div>ip: "${data.ip}",</div>
+                <div>city: "${data.city}",</div>
+                <div>region: "${data.region}",</div>
+                <div>country: "${data.country}",</div>
+                <div>loc: "${data.loc}",</div>
+                <div>org: "${data.org}",</div>
+                <div>postal: "${data.postal}",</div>
+                <div>timezone: "${data.timezone}",</div>
+                <div>asn: {</div>
+                <div>&nbsp;&nbsp;asn: "${data.asn.asn}",</div>
+                <div>&nbsp;&nbsp;name: "${data.asn.name}",</div>
+                <div>&nbsp;&nbsp;domain: "${data.asn.domain}",</div>
+                <div>&nbsp;&nbsp;route: "${data.asn.route}",</div>
+                <div>&nbsp;&nbsp;type: "${data.asn.type}"</div>
+                <div>}</div>
+                <div>company: {</div>
+                <div>&nbsp;&nbsp;name: "${data.company.name}",</div>
+                <div>&nbsp;&nbsp;domain: "${data.company.domain}",</div>
+                <div>&nbsp;&nbsp;type: "${data.company.type}"</div>
+                <div>}</div>
+                <div>privacy: {</div>
+                <div>&nbsp;&nbsp;vpn: ${data.privacy.vpn},</div>
+                <div>&nbsp;&nbsp;proxy: ${data.privacy.proxy},</div>
+                <div>&nbsp;&nbsp;tor: ${data.privacy.tor},</div>
+                <div>&nbsp;&nbsp;relay: ${data.privacy.relay},</div>
+                <div>&nbsp;&nbsp;hosting: ${data.privacy.hosting}</div>
+                <div>}</div>
+                <div>abuse: {</div>
+                <div>&nbsp;&nbsp;address: "${data.abuse.address}",</div>
+                <div>&nbsp;&nbsp;country: "${data.abuse.country}",</div>
+                <div>&nbsp;&nbsp;email: "${data.abuse.email}",</div>
+                <div>&nbsp;&nbsp;name: "${data.abuse.name}",</div>
+                <div>&nbsp;&nbsp;phone: "${data.abuse.phone}"</div>
+                <div>}</div>
             `;
             document.getElementById('result').innerHTML = resultHtml;
         })
