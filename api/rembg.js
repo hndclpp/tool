@@ -44,7 +44,7 @@ export default async function handler(req, res) {
                 res.send(buffer);
             } catch (error) {
                 console.error('抠图失败:', error);
-                res.status(500).json({ error: '抠图失败，请重试！', details: error.message });
+                res.status(666).json({ error: '抠图失败，请重试！', details: error.message });
             }
         });
     } else {
