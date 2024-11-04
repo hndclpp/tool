@@ -1,15 +1,14 @@
 {
   "name": "tool-main",
   "version": "1.0.0",
-  "description": "### cbm计算",
-  "main": "server.js",
+  "description": "一个简单的抠图工具",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "vercel dev"
   },
   "type": "module",
-  "keywords": [],
-  "author": "",
+  "keywords": ["抠图", "图像处理"],
+  "author": "Peng",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
