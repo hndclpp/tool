@@ -1,0 +1,40 @@
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            min-height: 400px;
+            text-align: center;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        label {
+            width: 35%;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            min-height: 30px;
+            line-height: 30px;
+        }
