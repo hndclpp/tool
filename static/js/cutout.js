@@ -14,7 +14,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
     formData.append('image_file', uploadedFile);
 
     try {
-        const response = await fetch('/api/remove-background', {
+        const response = await fetch('../api/rembg', {
             method: 'POST',
             body: formData,
         });

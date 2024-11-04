@@ -8,7 +8,13 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         upload(req, res, async (err) => {
             if (err) {
+                console.error('文件上传失败:', err);
                 return res.status(500).json({ error: '文件上传失败' });
+            }
+
+            if (!req.file) {
+                console.error('没有文件上传');
+                return res.status(400).json({ error: '没有文件上传' });
             }
 
             const formData = new FormData();
@@ -38,7 +44,7 @@ export default async function handler(req, res) {
                 res.send(buffer);
             } catch (error) {
                 console.error('抠图失败:', error);
-                res.status(500).json({ error: '抠图失败，请重试！' });
+                res.status(500).json({ error: '抠图失败，请重试！', details: error.message });
             }
         });
     } else {
