@@ -1,4 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap');
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
+    font-family: 'Noto Sans SC', sans-serif;
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
@@ -6,6 +16,22 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
+    line-height: 1.6;
+}
+
+/* 面包屑导航样式 */
+.breadcrumb {
+    margin: 15px;
+    font-size: 0.9em;
+}
+
+.breadcrumb a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
 }
 
 .container {
@@ -14,8 +40,9 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 800px;
     overflow-y: auto;
+    position: relative;
     transition: box-shadow 0.3s ease;
 }
 
@@ -23,9 +50,18 @@ body {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-
-.upload-group, .link-group, .format-group {
+.upload-group,
+.link-group,
+.format-group {
     margin-bottom: 20px;
+}
+
+.link-group {
+    margin-top: 20px; /* 增加顶部边距 */
+}
+
+.link-group button {
+    margin-top: 10px; /* 增加按钮顶部的边距 */
 }
 
 label {
@@ -34,14 +70,35 @@ label {
     margin-bottom: 5px;
 }
 
-input[type="file"], 
-input[type="text"], 
-select {
+.upload-group input[type="file"],
+.link-group input[type="text"],
+.format-group select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0;
+}
+
+input:focus,
+select:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
 
 .result {
@@ -53,4 +110,17 @@ select {
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
+}
+
+.error-message {
+    color: red;
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    transition: opacity 0.3s ease;
 }

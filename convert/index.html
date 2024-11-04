@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="这是一个图片格式转换工具，支持批量转换为 JPEG、PNG、WEBP、AVIF、ICO、SVG 和 PDF 格式。">
     <title>图片格式转换</title>
-    <link rel="stylesheet" type="text/css" href="/static/js/common.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/convert.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/convert.css">
     <script src="https://cdn.jsdelivr.net/npm/@squoosh/lib@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -19,6 +18,8 @@
 </nav>
 
 <div class="container">
+    <div id="errorMessage" class="error-message"></div> <!-- 错误消息容器 -->
+
     <h2>图片格式转换</h2>
 
     <img src="https://img.shields.io/badge/convert_to-jpg%E3%80%81png%E3%80%81webp%E3%80%81avif%E3%80%81ico%E3%80%81svg%E3%80%81pdf-blue?style=flat" alt="Desc">
@@ -27,11 +28,15 @@
     
     <div class="upload-group">
         <label for="image">选择图片文件:</label>
-        <input type="file" id="image" accept="image/*" multiple  placeholder="粘贴图片链接...">
+        <input type="file" id="image" accept="image/*" multiple>
+        <hr/>
+        <span> 可以使用Shift、Ctrl或者鼠标多选</span><br/>
+        <span>也可以<b>选择目标格式</b>后，直接在此界面Ctrl+V剪切板的图片</span>
+        <hr/>
     </div>
     
     <div class="link-group">
-        <label for="imageLink">或输入图片链接:</label>
+        <label for="imageLink">或者输入图片链接:</label>
         <input type="text" id="imageLink" placeholder="粘贴图片链接...">
         <button onclick="addImageFromLink()">添加图片</button>
     </div>
@@ -55,6 +60,6 @@
     <div class="result" id="resultContainer"></div>
 </div>
 
-<script src="/static/js/convert.js"></script>
+<script src="../static/js/convert.js"></script>
 </body>
 </html>

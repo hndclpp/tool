@@ -1,0 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#resultContainer {
+    margin-top: 20px;
+}
+
+button {
+    margin-top: 10px;
+}

@@ -1,4 +1,5 @@
 let convertedFiles = [];
+
 function toggleInputMethod(method) {
     const uploadGroup = document.querySelector('.upload-group');
     const linkGroup = document.querySelector('.link-group');
@@ -17,7 +18,7 @@ async function convertImage() {
     const format = document.getElementById('format').value;
 
     if (!fileInput.files.length) {
-        alert("请上传图片文件！");
+        showError("请上传图片文件！");
         return;
     }
 
@@ -90,21 +91,7 @@ async function convertImage() {
     });
 
     const results = await Promise.all(filePromises);
-    const resultDiv = document.querySelector('.result');
-    resultDiv.innerHTML = ''; // 清空之前的结果
-
-    results.forEach(file => {
-        const imgElement = document.createElement('img');
-        imgElement.src = file.url;
-        imgElement.alt = "转换后的图片预览";
-        resultDiv.appendChild(imgElement);
-
-        const downloadLink = document.createElement('a');
-        downloadLink.href = file.url;
-        downloadLink.download = file.name;
-        downloadLink.textContent = "下载 " + file.name;
-        resultDiv.appendChild(downloadLink);
-    });
+    displayResults(results);
 
     // 更新下载按钮的显示状态
     document.getElementById('zipButton').style.display = convertedFiles.length >= 2 ? 'inline' : 'none'; // 根据文件数量显示或隐藏
@@ -128,19 +115,17 @@ async function downloadZip() {
     URL.revokeObjectURL(url);
 }
 
-// 处理超链接图片
 function addImageFromLink() {
     const imageLink = document.getElementById('imageLink').value;
     if (imageLink) {
         const fileInput = document.getElementById('image');
         const dataTransfer = new DataTransfer();
 
-        // 创建一个新的 Image 对象
-        const img = new window.Image(); // 使用 window.Image 确保在浏览器中执行
-        img.crossOrigin = "Anonymous"; // 处理跨域问题
+        const img = new window.Image();
+        img.crossOrigin = "Anonymous"; 
         img.src = imageLink;
+
         img.onload = function() {
-            // 创建 Blob 对象
             const canvas = document.createElement('canvas');
             canvas.width = img.width;
             canvas.height = img.height;
@@ -148,16 +133,17 @@ function addImageFromLink() {
             ctx.drawImage(img, 0, 0);
 
             canvas.toBlob(function(blob) {
-                const file = new File([blob], 'image_from_link.' + getSelectedFormat(), {type: blob.type});
+                const file = new File([blob], `image_from_link.${getSelectedFormat()}`, {type: blob.type});
                 dataTransfer.items.add(file);
                 fileInput.files = dataTransfer.files;
-            }, 'image/png'); // 默认转换为 PNG
+            }, 'image/png'); 
         };
+
         img.onerror = function() {
-            alert("加载图片失败，请检查链接是否有效。");
+            showError("加载图片失败，请检查链接是否有效。");
         };
     } else {
-        alert("请粘贴有效的图片链接！");
+        showError("请粘贴有效的图片链接！");
     }
 }
 
@@ -165,3 +151,51 @@ function getSelectedFormat() {
     const formatSelect = document.getElementById('format');
     return formatSelect.options[formatSelect.selectedIndex].value;
 }
+
+function displayResults(results) {
+    const resultDiv = document.querySelector('.result');
+    resultDiv.innerHTML = ''; // 清空之前的结果
+
+    results.forEach(file => {
+        const imgElement = document.createElement('img');
+        imgElement.src = file.url;
+        imgElement.alt = "转换后的图片预览";
+        imgElement.style.maxWidth = '100%'; // 限制最大宽度
+        resultDiv.appendChild(imgElement);
+
+        const downloadLink = document.createElement('a');
+        downloadLink.href = file.url;
+        downloadLink.download = file.name;
+        downloadLink.textContent = "下载 " + file.name;
+        resultDiv.appendChild(downloadLink);
+    });
+}
+
+// 处理粘贴图片功能
+document.addEventListener('paste', async (event) => {
+    const items = event.clipboardData.items;
+
+    for (const item of items) {
+        if (item.type.startsWith('image/')) {
+            const blob = item.getAsFile();
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(blob);
+
+            const fileInput = document.getElementById('image');
+            fileInput.files = dataTransfer.files;
+
+            // 直接调用转换函数
+            await convertImage();
+            return; // 只处理第一个图片
+        }
+    }
+});
+
+// 显示错误信息
+function showError(message) {
+    const errorDiv = document.getElementById('errorMessage');
+    errorDiv.textContent = message;
+    errorDiv.style.display = 'block';
+    setTimeout(() => { errorDiv.style.display = 'none'; }, 3000); // 3秒后隐藏
+}
+

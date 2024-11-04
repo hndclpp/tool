@@ -2,11 +2,18 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>图像处理Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抠图工具</title>
+    <link rel="stylesheet" href="/static/css/cutout.css"> <!-- 正确的路径 -->
 </head>
 <body>
-    <input type="file" id="fileInput" />
-    <button id="uploadButton">上传并处理</button>
-    <div id="result"></div>
+    <h1>抠图工具</h1>
+    <input type="file" id="upload" accept="image/*">
+    <button id="processButton">抠图</button>
+    <div id="resultContainer">
+        <h2>处理结果：</h2>
+        <img id="resultImage" src="" alt="抠图结果" style="display:none;">
+    </div>
+    <script src="/static/js/cutout.js"></script> <!-- 正确的路径 -->
 </body>
 </html>
