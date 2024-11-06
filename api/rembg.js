@@ -1,11 +1,11 @@
 import pkg from 'pg';  // 使用默认导入
-const { Client } = pkg;  // 获取 Client 类
+const { Client } = pkg;
 import multer from 'multer';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
 
 const client = new Client({
-  connectionString: process.env.POSTGRES_URL, // 连接数据库
+  connectionString: process.env.POSTGRES_URL,
   ssl: {
     rejectUnauthorized: false,
   },
@@ -16,33 +16,9 @@ client.connect();
 // 设置 multer 处理上传的图片
 const upload = multer().single('image_file');
 
-// 获取下一个API密钥，轮流使用
-async function getNextApiKey() {
-  // 假设从环境变量中获取密钥列表
-  const keys = [
-    'REMBG_API_KEY_1',
-    'REMBG_API_KEY_2',
-    'REMBG_API_KEY_3',
-  ];
-
-  // 这里简单示例，轮流读取密钥（可以根据使用次数来动态调整选择）
-  let keyIndex = new Date().getMinutes() % keys.length;  // 通过分钟数控制轮流
-  return process.env[keys[keyIndex]];
-}
-
-// 更新数据库中使用的密钥
-async function updateApiKeyUsage(keyName) {
-  const query = `
-    INSERT INTO api_key_usage (key_name, usage_count, last_used)
-    VALUES ($1, 1, NOW())
-    ON CONFLICT (key_name) 
-    DO UPDATE SET usage_count = api_key_usage.usage_count + 1, last_used = NOW();
-  `;
-  await client.query(query, [keyName]);
-}
-
 export default async function handler(req, res) {
   if (req.method === 'POST') {
+    // 处理抠图请求
     if (req.body.image_file) {
       upload(req, res, async (err) => {
         if (err) {
@@ -55,21 +31,28 @@ export default async function handler(req, res) {
           return res.status(400).json({ error: '没有文件上传' });
         }
 
-        const formData = new FormData();
-        formData.append('size', 'auto');
-        formData.append('image_file', req.file.buffer, {
-          filename: req.file.originalname,
-          contentType: req.file.mimetype,
-        });
-
         try {
-          const apiKey = await getNextApiKey();
-          console.log(`使用的API密钥: ${apiKey}`);
+          // 查询数据库中 API 密钥使用情况
+          const result = await client.query('SELECT * FROM api_key_usage ORDER BY last_used ASC LIMIT 1');
+          if (result.rows.length === 0) {
+            return res.status(500).json({ error: '没有可用的 API 密钥' });
+          }
+
+          // 获取下一个可用的 API 密钥
+          const nextApiKey = result.rows[0].key_name;
+
+          // 请求抠图 API
+          const formData = new FormData();
+          formData.append('size', 'auto');
+          formData.append('image_file', req.file.buffer, {
+            filename: req.file.originalname,
+            contentType: req.file.mimetype,
+          });
 
           const response = await fetch('https://api.remove.bg/v1.0/removebg', {
             method: 'POST',
             headers: {
-              'X-Api-Key': apiKey,
+              'X-Api-Key': process.env[nextApiKey], // 通过环境变量读取对应的 API 密钥
               ...formData.getHeaders(),
             },
             body: formData,
@@ -80,11 +63,16 @@ export default async function handler(req, res) {
             throw new Error(`${response.status}: ${response.statusText} - ${errorMessage}`);
           }
 
+          // 获取图片数据并返回
           const buffer = await response.buffer();
 
-          // 更新数据库
-          await updateApiKeyUsage(apiKey);
+          // 更新数据库中 API 密钥的使用情况
+          const updateResult = await client.query(
+            'UPDATE api_key_usage SET usage_count = usage_count + 1, last_used = NOW() WHERE key_name = $1',
+            [nextApiKey]
+          );
 
+          // 返回处理后的图片
           res.setHeader('Content-Type', 'image/png');
           res.send(buffer);
         } catch (error) {
@@ -93,10 +81,10 @@ export default async function handler(req, res) {
         }
       });
     } else {
-      res.status(400).json({ error: '未提供图片文件' });
+      return res.status(400).json({ error: '没有提供图片文件' });
     }
   } else {
     res.setHeader('Allow', ['POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
