@@ -4,28 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>抠图工具</title>
-    <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/cutout.css">
 </head>
 <body>
-    <nav class="breadcrumb">
-    <a href="../index.html">index</a> &gt; 抠图工具
-</nav>
+
+
     <div class="container">
-        <div class="upload-section">
-            <label for="upload" class="upload-label">选择图片：</label>
-            <input type="file" id="upload" accept="image/*">
-            <button id="processButton">抠图</button>
+        <h1>抠图工具</h1>
+
+        <!-- 上传图片 -->
+        <input type="file" id="upload" accept="image/*" class="upload-input">
+        <button id="processButton" class="button">抠图</button>
+
+        <!-- 加载动画 -->
+        <div id="loading" class="spinner" style="display: none;"></div>
+
+        <!-- 结果显示区域 -->
+        <div id="resultSection" style="display: none;">
+            <img id="resultImage" src="" alt="抠图结果" class="result-image">
+            <button id="downloadButton" class="button" style="display: none;">下载 PNG</button>
         </div>
-        
-        <div id="resultContainer" class="result-section">
-            <div id="loadingSpinner" class="spinner" style="display:none;"></div>
-            <img id="resultImage" src="" alt="抠图结果" style="display:none;">
-            <button id="downloadButton" style="display:none;">下载图片</button>
-            <p id="errorMessage" style="display:none; color: red;">处理失败，请重试</p>
-        </div>
+
+        <!-- 错误消息 -->
+        <p id="error-message" style="color: red; display: none;">抠图失败，请重试！</p>
     </div>
-    
+
     <script src="../static/js/cutout.js"></script>
 </body>
 </html>
