@@ -1,5 +1,4 @@
-import pkg from 'pg';
-const { Client } = pkg;
+import { Client } from 'pg';
 import multer from 'multer';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
@@ -82,4 +81,3 @@ export default async function handler(req, res) {
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 }
-
