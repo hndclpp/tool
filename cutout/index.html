@@ -7,30 +7,33 @@
     <link rel="stylesheet" href="../static/css/cutout.css">
 </head>
 <body>
-    <div class="container">
+    <div>
         <h1>抠图工具</h1>
+        <input type="file" id="upload" accept="image/*" />
+        <button id="processButton">抠图</button>
+        <button id="checkButton">查询 API 使用情况</button>
+        
+        <div id="loading" style="display:none;">正在处理...</div>
+        <div id="error-message" style="display:none; color: red;">抠图失败，请重试！</div>
 
-        <!-- 上传图片 -->
-        <input type="file" id="upload" accept="image/*" class="upload-input">
-        <button id="processButton" class="button">抠图</button>
-
-        <!-- 加载动画 -->
-        <div id="loading" class="spinner" style="display: none;"></div>
-
-        <!-- 结果显示区域 -->
-        <div id="resultSection" style="display: none;">
-            <img id="resultImage" src="" alt="抠图结果" class="result-image">
-            <button id="downloadButton" class="button" style="display: none;">下载 PNG</button>
+        <div id="resultSection" style="display:none;">
+            <h3>抠图结果：</h3>
+            <img id="resultImage" alt="抠图结果" />
+            <br />
+            <a id="downloadButton" style="display:none;">下载结果</a>
         </div>
 
-        <!-- 错误消息 -->
-        <p id="error-message" style="color: red; display: none;">抠图失败，请重试！</p>
-
-        <!-- 查询API使用情况 -->
-        <button id="checkUsageButton" class="button">查询API使用情况</button>
-        <div id="usageInfo" style="margin-top: 20px;">
-            <ul id="usageList"></ul>
-        </div>
+        <h3>API 使用情况：</h3>
+        <table id="usageTable" border="1">
+            <thead>
+                <tr>
+                    <th>密钥名称</th>
+                    <th>使用次数</th>
+                    <th>上次使用日期</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
 
     <script src="../static/js/cutout.js"></script>

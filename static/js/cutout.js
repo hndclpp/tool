@@ -18,6 +18,7 @@ document.getElementById('processButton').addEventListener('click', async () => {
     document.getElementById('error-message').style.display = 'none'; 
     document.getElementById('resultSection').style.display = 'none'; 
     document.getElementById('downloadButton').style.display = 'none'; 
+
     try {
         const response = await fetch('/api/rembg', {
             method: 'POST',
@@ -55,27 +56,29 @@ document.getElementById('processButton').addEventListener('click', async () => {
     }
 });
 
-document.getElementById('checkUsageButton').addEventListener('click', async () => {
+document.getElementById('checkButton').addEventListener('click', async () => {
     try {
         const response = await fetch('/api/check', {
-            method: 'GET',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
         });
 
         if (!response.ok) {
-            throw new Error('查询失败');
+            throw new Error('查询API使用情况失败');
         }
 
         const data = await response.json();
-        const usageList = document.getElementById('usageList');
-        usageList.innerHTML = ''; // 清空之前的内容
+        const usageTable = document.getElementById('usageTable');
+        usageTable.innerHTML = ''; // 清空当前表格内容
 
-        data.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = `API Key: ${item.key_name}, 次数: ${item.usage_count}, 上次使用时间: ${item.last_used}`;
-            usageList.appendChild(li);
+        data.data.forEach(row => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${row.key_name}</td><td>${row.usage_count}</td><td>${row.last_used}</td>`;
+            usageTable.appendChild(tr);
         });
-
     } catch (error) {
-        alert(`查询失败: ${error.message}`);
+        console.error('查询失败:', error);
     }
 });
