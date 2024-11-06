@@ -50,40 +50,32 @@ document.getElementById('processButton').addEventListener('click', async () => {
         };
 
     } catch (error) {
-        // console.error('抠图失败:', error);
         document.getElementById('loading').style.display = 'none'; 
         document.getElementById('error-message').style.display = 'block'; 
     }
 });
 
-// 查询 API 使用情况
 document.getElementById('checkUsageButton').addEventListener('click', async () => {
     try {
-        const response = await fetch('/api/rembg', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ checkUsage: true })
+        const response = await fetch('/api/check', {
+            method: 'GET',
         });
 
         if (!response.ok) {
-            throw new Error('查询 API 使用情况失败');
+            throw new Error('查询失败');
         }
 
         const data = await response.json();
         const usageList = document.getElementById('usageList');
-        usageList.innerHTML = ''; // 清空现有内容
+        usageList.innerHTML = ''; // 清空之前的内容
 
-        // 显示 API 使用记录
-        data.data.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Key: ${item.api_key}, 使用次数: ${item.usage_count}`;
-            usageList.appendChild(listItem);
+        data.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = `API Key: ${item.key_name}, 次数: ${item.usage_count}, 上次使用时间: ${item.last_used}`;
+            usageList.appendChild(li);
         });
 
-        // 显示使用情况部分
-        document.getElementById('usageInfo').style.display = 'block';
     } catch (error) {
-        console.error('查询失败:', error);
-        alert('查询 API 使用情况失败，请重试');
+        alert(`查询失败: ${error.message}`);
     }
 });

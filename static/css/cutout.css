@@ -1,4 +1,3 @@
-/* 基本布局 */
 * {
     margin: 0;
     padding: 0;
@@ -24,7 +23,6 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* 上传输入框 */
 .upload-input {
     margin-bottom: 20px;
     padding: 10px;
@@ -33,7 +31,6 @@ body {
     font-size: 14px;
 }
 
-/* 按钮样式 */
 .button {
     background-color: #007bff;
     color: white;
@@ -48,7 +45,6 @@ body {
     background-color: #0056b3;
 }
 
-/* 加载动画 */
 .spinner {
     border: 4px solid #f3f3f3;
     border-top: 4px solid #3498db;
@@ -64,7 +60,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 结果图片 */
 .result-image {
     max-width: 100%;
     height: auto;
@@ -73,16 +68,11 @@ body {
     margin: 20px auto;
 }
 
-/* 使用情况部分 */
-#usageInfo {
-    margin-top: 20px;
-    text-align: left;
-    padding: 10px;
-    background-color: #f7f7f7;
-    border-radius: 4px;
-}
-
-#usageList {
+ul {
     list-style-type: none;
     padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
 }
