@@ -72,3 +72,17 @@ body {
     display: block;
     margin: 20px auto;
 }
+
+/* 使用情况部分 */
+#usageInfo {
+    margin-top: 20px;
+    text-align: left;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 4px;
+}
+
+#usageList {
+    list-style-type: none;
+    padding: 0;
+}

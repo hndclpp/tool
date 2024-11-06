@@ -55,3 +55,35 @@ document.getElementById('processButton').addEventListener('click', async () => {
         document.getElementById('error-message').style.display = 'block'; 
     }
 });
+
+// 查询 API 使用情况
+document.getElementById('checkUsageButton').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/rembg', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ checkUsage: true })
+        });
+
+        if (!response.ok) {
+            throw new Error('查询 API 使用情况失败');
+        }
+
+        const data = await response.json();
+        const usageList = document.getElementById('usageList');
+        usageList.innerHTML = ''; // 清空现有内容
+
+        // 显示 API 使用记录
+        data.data.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Key: ${item.api_key}, 使用次数: ${item.usage_count}`;
+            usageList.appendChild(listItem);
+        });
+
+        // 显示使用情况部分
+        document.getElementById('usageInfo').style.display = 'block';
+    } catch (error) {
+        console.error('查询失败:', error);
+        alert('查询 API 使用情况失败，请重试');
+    }
+});
