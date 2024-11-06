@@ -43,9 +43,9 @@ export default async function handler(req, res) {
       });
 
       try {
-        // 从环境变量中获取 API 密钥，并通过它访问 Rembg API
-        const apiKey = process.env[`REMBG_API_KEY_${getRandomInt(1, 3)}`];
-
+        // 获取轮流使用的 API 密钥
+        const apiKey = await getApiKey();
+        
         // 调用 Rembg API 进行抠图操作
         const response = await fetch('https://api.remove.bg/v1.0/removebg', {
           method: 'POST',
@@ -63,10 +63,6 @@ export default async function handler(req, res) {
 
         const buffer = await response.buffer();
 
-        // 保存结果到数据库
-        const query = 'INSERT INTO image_results (image_data) VALUES ($1)';
-        await client.query(query, [buffer]);
-
         // 返回抠图后的图片
         res.setHeader('Content-Type', 'image/png');
         res.send(buffer);
@@ -82,7 +78,42 @@ export default async function handler(req, res) {
   }
 }
 
-// 获取一个随机的 API 密钥（1 或 2）
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+// 获取轮流使用的 API 密钥
+async function getApiKey() {
+  const keyIndex = await getNextKeyIndex();
+
+  // 通过索引获取对应的 API 密钥
+  const apiKey = process.env[`REMBG_API_KEY_${keyIndex}`];
+
+  // 更新密钥的使用次数
+  await updateApiKeyUsage(keyIndex);
+
+  return apiKey;
+}
+
+// 获取下一个轮流使用的密钥索引
+async function getNextKeyIndex() {
+  const query = 'SELECT * FROM key_usage ORDER BY last_used_at LIMIT 1';
+  const result = await client.query(query);
+
+  let keyIndex = 1;  // 默认使用第一个密钥
+
+  if (result.rows.length > 0) {
+    // 选择使用次数最少的密钥
+    keyIndex = (result.rows[0].key_index % 3) + 1;
+  }
+
+  return keyIndex;
+}
+
+// 更新指定密钥的使用次数
+async function updateApiKeyUsage(keyIndex) {
+  const query = `
+    INSERT INTO key_usage (key_index, usage_count, last_used_at)
+    VALUES ($1, 1, NOW())
+    ON CONFLICT (key_index)
+    DO UPDATE SET usage_count = key_usage.usage_count + 1, last_used_at = NOW();
+  `;
+
+  await client.query(query, [keyIndex]);
 }
