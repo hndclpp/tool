@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>抠图工具</title>
+    <link rel="stylesheet" href="../static/css/common.css">
     <link rel="stylesheet" href="../static/css/cutout.css">
 </head>
 <body>
+    <nav class="breadcrumb">
+    <a href="../index.html">index</a> &gt; 抠图工具
+</nav>
     <div class="container">
-        <h1>抠图工具</h1>
         <div class="upload-section">
             <label for="upload" class="upload-label">选择图片：</label>
             <input type="file" id="upload" accept="image/*">
@@ -16,7 +19,6 @@
         </div>
         
         <div id="resultContainer" class="result-section">
-            <h2>处理结果：</h2>
             <div id="loadingSpinner" class="spinner" style="display:none;"></div>
             <img id="resultImage" src="" alt="抠图结果" style="display:none;">
             <button id="downloadButton" style="display:none;">下载图片</button>

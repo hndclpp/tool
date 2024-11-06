@@ -23,10 +23,6 @@ $$
 
 - 使用[ExchangeRate-API](https://www.exchangerate-api.com)查询，每天早上八点更新一次
 
-### IP地址查询
-
-- 使用[IPinfo](https://ipinfo.io)查询
-
 ### 抠图demo
 
 - 使用[removebg](https://www.remove.bg)的api

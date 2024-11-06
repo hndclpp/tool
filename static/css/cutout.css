@@ -9,11 +9,14 @@
 
 /* 上传区域样式 */
 .upload-section {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 20px;
 }
 
 /* 结果显示区样式 */
 .result-section {
+     
     margin-top: 20px;
 }
 
