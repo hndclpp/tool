@@ -15,10 +15,9 @@ document.getElementById('processButton').addEventListener('click', async () => {
 
     // 显示加载动画
     document.getElementById('loading').style.display = 'block';
-    document.getElementById('error-message').style.display = 'none'; // 隐藏错误信息
-    document.getElementById('resultSection').style.display = 'none'; // 隐藏结果区
-    document.getElementById('downloadButton').style.display = 'none'; // 隐藏下载按钮
-
+    document.getElementById('error-message').style.display = 'none'; 
+    document.getElementById('resultSection').style.display = 'none'; 
+    document.getElementById('downloadButton').style.display = 'none'; 
     try {
         const response = await fetch('/api/rembg', {
             method: 'POST',
@@ -40,21 +39,19 @@ document.getElementById('processButton').addEventListener('click', async () => {
         document.getElementById('resultSection').style.display = 'block'; // 显示结果区
         document.getElementById('downloadButton').style.display = 'inline-block'; // 显示下载按钮
 
-        // 获取上传文件的原始文件名
-        const fileName = uploadedFile.name;
+        const fileName = uploadedFile.name.replace(/\.[^/.]+$/, "") + ".png"; // 强制将扩展名改为 .png
 
         // 处理下载按钮的点击事件
         document.getElementById('downloadButton').onclick = function() {
             const link = document.createElement('a');
             link.href = imgURL;
-            link.download = fileName; // 使用原始文件名作为下载文件名
+            link.download = fileName;
             link.click(); // 触发下载
         };
 
     } catch (error) {
-        // 处理失败，显示错误信息
-        console.error('抠图失败:', error);
-        document.getElementById('loading').style.display = 'none'; // 隐藏加载动画
-        document.getElementById('error-message').style.display = 'block'; // 显示错误信息
+        // console.error('抠图失败:', error);
+        document.getElementById('loading').style.display = 'none'; 
+        document.getElementById('error-message').style.display = 'block'; 
     }
 });
