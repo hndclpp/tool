@@ -7,7 +7,10 @@
     "dev": "vercel dev"
   },
   "type": "module",
-  "keywords": ["抠图", "图像处理"],
+  "keywords": [
+    "抠图",
+    "图像处理"
+  ],
   "author": "Peng",
   "license": "ISC",
   "dependencies": {
@@ -15,6 +18,7 @@
     "express": "^4.21.1",
     "form-data": "^4.0.1",
     "multer": "^1.4.5-lts.1",
-    "node-fetch": "^3.3.2"
+    "node-fetch": "^3.3.2",
+    "pg": "^8.13.1"
   }
 }
