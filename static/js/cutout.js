@@ -40,6 +40,17 @@ document.getElementById('processButton').addEventListener('click', async () => {
         document.getElementById('resultSection').style.display = 'block'; // 显示结果区
         document.getElementById('downloadButton').style.display = 'inline-block'; // 显示下载按钮
 
+        // 获取上传文件的原始文件名
+        const fileName = uploadedFile.name;
+
+        // 处理下载按钮的点击事件
+        document.getElementById('downloadButton').onclick = function() {
+            const link = document.createElement('a');
+            link.href = imgURL;
+            link.download = fileName; // 使用原始文件名作为下载文件名
+            link.click(); // 触发下载
+        };
+
     } catch (error) {
         // 处理失败，显示错误信息
         console.error('抠图失败:', error);
