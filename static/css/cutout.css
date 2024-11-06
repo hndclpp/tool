@@ -1,12 +1,55 @@
-body {
-    font-family: Arial, sans-serif;
+/* 外层容器样式 */
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
     text-align: center;
+    font-family: Arial, sans-serif;
 }
 
-#resultContainer {
+/* 上传区域样式 */
+.upload-section {
+    margin-bottom: 20px;
+}
+
+/* 结果显示区样式 */
+.result-section {
     margin-top: 20px;
 }
 
-button {
+#resultImage {
+    max-width: 100%;
+    height: auto;
     margin-top: 10px;
+}
+
+/* 按钮样式 */
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#downloadButton {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+/* 加载动画样式 */
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
