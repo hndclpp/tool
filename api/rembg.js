@@ -1,4 +1,5 @@
-import { Client } from 'pg';
+import pkg from 'pg';
+const { Client } = pkg;
 import multer from 'multer';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
