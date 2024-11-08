@@ -1,41 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>抠图工具</title>
+    <title>Image Cutout</title>
     <link rel="stylesheet" href="../static/css/cutout.css">
 </head>
 <body>
-    <div>
-        <h1>抠图工具</h1>
-        <input type="file" id="upload" accept="image/*" />
-        <button id="processButton">抠图</button>
-        <button id="checkButton">查询 API 使用情况</button>
-        
-        <div id="loading" style="display:none;">正在处理...</div>
-        <div id="error-message" style="display:none; color: red;">抠图失败，请重试！</div>
-
-        <div id="resultSection" style="display:none;">
-            <h3>抠图结果：</h3>
-            <img id="resultImage" alt="抠图结果" />
-            <br />
-            <a id="downloadButton" style="display:none;">下载结果</a>
+    <div class="container">
+        <h1>Image Background Removal</h1>
+        <input type="file" id="imageUpload" accept="image/*">
+        <button id="cutoutButton">Remove Background</button>
+        <div id="result">
+            <img id="cutoutImage" src="" alt="Cutout result will appear here">
         </div>
-
-        <h3>API 使用情况：</h3>
-        <table id="usageTable" border="1">
-            <thead>
-                <tr>
-                    <th>密钥名称</th>
-                    <th>使用次数</th>
-                    <th>上次使用日期</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
     </div>
-
     <script src="../static/js/cutout.js"></script>
 </body>
 </html>
